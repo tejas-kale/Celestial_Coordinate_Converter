@@ -101,14 +101,12 @@ deg_to_time <- function(ra_dec_deg_df, col_names, out_file, out_sep, out_form) {
 
 time_to_deg <- function(ra_dec_time_df, col_names, out_file, out_sep, num_sig_dig) {
 	ra_dec_split_bychar_list <- lapply(ra_dec_time_df, FUN=function(data_col) sapply(data_col, FUN=function(col_val) val_separator(col_val)))
-	print(str(ra_dec_split_bychar_list))
 	ra_dec_split_bychar_list <- lapply(ra_dec_split_bychar_list, FUN=function(var_mat) t(as.data.frame(var_mat)))
 	names(ra_dec_split_bychar_list) <- c("RA", "DEC")
 
 	ra_deg <- apply(ra_dec_split_bychar_list$RA, 1, FUN=function(ra_val) abs(ra_val[1]*15) + (ra_val[2]/4) + (ra_val[3]/240))
 	dec_deg <- apply(ra_dec_split_bychar_list$DEC, 1, FUN=function(dec_val) sign(dec_val[1]) * ((abs(dec_val[1]) + (dec_val[2]/60) + (dec_val[3]/3600))))
 	ra_dec_deg_df <- as.data.frame(cbind(ra_deg, dec_deg))
-	print(str(ra_dec_deg_df))
 	names(ra_dec_deg_df) <- c("RA", "DEC")
 	row.names(ra_dec_deg_df) <- 1:nrow(ra_dec_deg_df)
 
